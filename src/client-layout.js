@@ -45,16 +45,39 @@ const LENIS_DESKTOP = {
 
 gsap.registerPlugin(ScrollTrigger);
 
-function ScrollTriggerLenisSync() {
+function RouteScrollManager() {
   const pathname = usePathname();
-
-  useLenis(() => {
+  const lenis = useLenis(() => {
     ScrollTrigger.update();
   });
 
   useEffect(() => {
-    requestAnimationFrame(() => ScrollTrigger.refresh());
-  }, [pathname]);
+    if (!("scrollRestoration" in window.history)) return;
+
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
+  useEffect(() => {
+    const resetScroll = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      lenis?.scrollTo(0, { immediate: true, force: true });
+    };
+
+    resetScroll();
+
+    requestAnimationFrame(() => {
+      resetScroll();
+      ScrollTrigger.clearScrollMemory();
+      ScrollTrigger.refresh();
+    });
+  }, [pathname, lenis]);
 
   return null;
 }
@@ -100,7 +123,7 @@ export default function ClientLayout({ children }) {
   return (
     <ViewTransitions>
       <ReactLenis root options={lenisOptions}>
-        <ScrollTriggerLenisSync />
+        <RouteScrollManager />
         <Nav pageRef={pageWrapperRef} />
         <div className="page" ref={pageRef}>
           <div className="page-wrapper" ref={pageWrapperRef}>
