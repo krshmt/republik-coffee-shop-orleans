@@ -51,8 +51,13 @@ export default function About() {
       if (!section) return;
 
       const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
+      const headingLines = [
+        ".hero-heading .heading-line-1",
+        ".hero-heading .heading-line-2",
+        ".hero-heading .heading-line-3",
+      ];
       const headerOffsetY = isMobile ? "200vh" : "175vh";
-      const headerOffsetX = isMobile ? -100 : -150;
+      const headerOffsetX = isMobile ? -130 : -220;
       const imageOffsetY = isMobile ? 140 : 180;
 
       ctx = gsap.context(() => {
@@ -74,6 +79,8 @@ export default function About() {
               scale: 2,
               y: headerOffsetY,
               xPercent: headerOffsetX,
+              duration: 1,
+              ease: "none",
             },
             "scroll",
           )
@@ -83,14 +90,27 @@ export default function About() {
               scale: 2,
               y: headerOffsetY,
               xPercent: -headerOffsetX,
+              duration: 1,
+              ease: "none",
             },
             "scroll",
+          )
+          .to(
+            headingLines,
+            {
+              autoAlpha: 0,
+              duration: 0.2,
+              ease: "none",
+            },
+            0.72,
           )
           .to(
             ".hero-image",
             {
               scaleY: 2.5,
               yPercent: imageOffsetY,
+              duration: 1,
+              ease: "none",
             },
             "scroll",
           )
@@ -98,6 +118,8 @@ export default function About() {
             ".hero-image img",
             {
               scaleX: 2.5,
+              duration: 1,
+              ease: "none",
             },
             "scroll",
           );
