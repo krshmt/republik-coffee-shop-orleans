@@ -13,6 +13,21 @@ const EXIT_ANIMATION_MS = 700;
 
 let isInitialLoad = true;
 
+function PreloaderTitle({ title }) {
+  const words = title.trim().split(/\s+/);
+  const firstLine = words.slice(0, -1).join(" ");
+  const secondLine = words.at(-1);
+
+  if (words.length < 2) return title;
+
+  return (
+    <>
+      <span className="preloader-title-line">{firstLine}</span>
+      <span className="preloader-title-line">{secondLine}</span>
+    </>
+  );
+}
+
 export default function Preloader({
   title = "Republik Coffee Shop",
   duration = 2600,
@@ -101,12 +116,14 @@ export default function Preloader({
     >
       <div className="preloader-inner">
         <div className="preloader-title-wrap">
-          <h2 className="preloader-title preloader-title-base">{title}</h2>
+          <h2 className="preloader-title preloader-title-base">
+            <PreloaderTitle title={title} />
+          </h2>
           <h2
             className="preloader-title preloader-title-fill"
             style={{ width: `${progress}%` }}
           >
-            {title}
+            <PreloaderTitle title={title} />
           </h2>
         </div>
 

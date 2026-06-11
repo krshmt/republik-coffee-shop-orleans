@@ -39,6 +39,14 @@
   line-height: 0.85;
 }
 
+.preloader-title-line {
+  display: inline;
+}
+
+.preloader-title-line + .preloader-title-line::before {
+  content: " ";
+}
+
 .preloader-title-base {
   color: rgba(224, 222, 209, 0.16);
 }
@@ -116,5 +124,24 @@
 
   .preloader-inner {
     gap: 2.5rem;
+    width: 100%;
+  }
+
+  .preloader-title-wrap {
+    width: min(100%, 34rem);
+  }
+
+  .preloader-title {
+    width: 100%;
+    white-space: normal;
+    font-size: clamp(3.2rem, 18vw, 6.5rem);
+  }
+
+  .preloader-title-line {
+    display: block;
+  }
+
+  .preloader-title-line + .preloader-title-line::before {
+    content: "";
   }
 }
