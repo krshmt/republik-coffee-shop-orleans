@@ -5,7 +5,7 @@ import gsap from "gsap";
 
 import "./Marquee.css";
 
-const MARQUEE_TEXT = "Coffee • Breakfast • Pastries • Lunch • Ice Cream • Coffee • Breakfast • Pastries • Lunch • Ice Cream •";
+const MARQUEE_TEXT = "Coffee • Food • Friends • ";
 const MARQUEE_REPEAT_COUNT = 12;
 
 const Marquee = () => {
